@@ -1,6 +1,8 @@
 *.pdf
-tmp
+tmp*
 *.bk
+images/*
+catalogues/*
 
 # Ignore system-specific files
 .DS_Store
