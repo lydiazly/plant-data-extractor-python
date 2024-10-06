@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# config/config.py
 """
 [Python] 3.11
 [Pkgs] python-dotenv
@@ -8,95 +9,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-CATEGORIES = {
-    "NativePerennials": "Native Perennials",
-    "NativeGroundcovers": "Native Groundcovers",
-    "NativeShrubs": "Native Shrubs",
-    "NativeTrees": "Native Trees",
-    "NativeWetlandPlants": "Native Wetland Plants",
-    "Grasses-Associates": "Grasses & Associates",
-    "ChristmasTreeSeedlings": "Christmas Tree Seedlings",
-    "Ferns": "Ferns",
-    "MiscellaneousGroundcovers": "Miscellaneous Groundcovers",
-    "MiscellaneousPlants": "Miscellaneous Plants"
-}
+PDF_PREFIX = "../data/NATS-Nursery-Ltd-Catalogue-2019"  # {PDF_PREFIX}_{category}.pdf
 
-SUN_MAPPING = {
-    "S": "Sun",
-    "PSH": "Partial Shade",
-    "SH": "Shade"
-}
+CATALOG_DIR = "./catalogues"
+IMAGE_DIR = './images'
 
-SOIL_MAPPING = {
-    "AC": "Acidic",
-    "D": "Dry",
-    "AL": "Alkaline (Basic)",
-    "H": "Humus",
-    "M": "Moist",
-    "R": "Rocky",
-    "S": "Sandy",
-    "W": "Wet",
-    "WD": "Well Drained",
-    "DT": "Drought Tolerant"
-}
-
-HABITAT_MAPPING = {
-    "BF": "Bio-filtration",
-    "BG": "Bog",
-    "DS": "Disturbed Sites",
-    "FE": "Forest Edge",
-    "GL": "Grassland",
-    "GR": "Green Roof",
-    "INT": "Interior",
-    "MT": "Montane/Alpine",
-    "RP": "Riparian",
-    "OF": "Open Forest",
-    "SF": "Shade Forest",
-    "SL": "Shoreline",
-    "SM": "Salt Marsh",
-    "WL": "Wetland"
-}
-
-SIZE_MAPPING = {
-    "C": "Container",
-    "P": "Plug",
-    "LS": "Live Stake",
-    "URC": "Un-Rooted Cuttings"
-}
-
-COL_NAMES_ORIGINAL = [
-    "LATIN",
-    "COMMON",
-    "SUN",
-    "SOIL",
-    "HABITAT",
-    "SIZES",
-    "CATEGORY"
-]
-
-COL_NAMES_ALL = [
-    "IN_STOCK",
-    "LATIN",
-    "COMMON",
-    "SQUAMISH",
-    "HALKOMELEM",
-    "FAMILY",
-    "CATEGORY",
-    "KEYWORDS",
-    "MAX_HEIGHT",
-    "SUN",
-    "SOIL",
-    "HABITAT",
-    "SIZES",
-    "GROWING_EASE",
-    "USE_VALUE",
-    "ATTRACTS",
-    "URL",
-    "IMAGE",
-    "DESCRIPTION"
-]
+CATALOG_FILE_NATS = os.path.join(CATALOG_DIR, "catalogue_nats_merged.csv")
+CATALOG_FILE_SHOP = os.path.join(CATALOG_DIR, "catalogue_shop_merged.csv")
 
 BASE_URL = os.getenv('BASE_URL')
+
 GALLERY_URLS = {
     "Perennial/Annual": BASE_URL + "/shop/perennialannual/22?page={page_num}&limit=180&sort_by=name&sort_order=asc",
     "Shrubs": BASE_URL + "/shop/shrubs/23?page={page_num}&limit=180&sort_by=name&sort_order=asc",
