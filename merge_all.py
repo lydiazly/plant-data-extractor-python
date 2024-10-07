@@ -18,6 +18,7 @@ from config import columns, config, corrections
 input_file_nats = config.CATALOG_FILE_NATS
 input_file_shop = config.CATALOG_FILE_SHOP
 output_file = os.path.join(config.CATALOG_DIR, "catalogue_all_merged.csv")
+output_file_original = os.path.join(config.CATALOG_DIR, "catalogue_all_merged_original.csv")
 
 
 PREPEND = 'prepend'
@@ -43,11 +44,14 @@ if __name__ == '__main__':
     for name, value in corrections.SUN_FIX.items():
         df_nats.loc[df_nats['LATIN'] == name, 'SUN'] = value
 
-    df_merged = pd.merge(df_nats, df_shop, on='LATIN', how='outer', suffixes=('', '_shop')).fillna('')
+    df_merged = pd.merge(df_nats, df_shop, on=['LATIN', 'COMMON'], how='outer', suffixes=('', '_shop')).fillna('')
     df_merged.sort_values(by='LATIN', inplace=True)
     df_merged.reset_index(drop=True, inplace=True)
     col_names_original = df_merged.columns
     # print(list(col_names_original))
+
+    df_merged.to_csv(output_file_original, index=False)
+    print(f"File saved: {output_file_original}")
 
     # Correct 'Perennial/Annual' in 'KEYWORDS'
     if corrections.PERENNIALS:

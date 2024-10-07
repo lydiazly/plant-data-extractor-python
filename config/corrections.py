@@ -45,9 +45,11 @@ LATIN_REPLACE_NATS = {
 
 # To keep consistency with the shop
 COMMON_REPLACE_NATS = {
-    "Indian Plum": "Osoberry/Indian Plum/Wild Plum",
+    "Black Hawthorne": "Black Hawthorn",  # more common
     "Skunk Cabbage": "Western Skunk Cabbage",  # ?
-    "False Lily-of-the- Valley": "False Lily-of-the-Valley"  # typo fixed
+    "False Lily-of-the- Valley": "False Lily-of-the-Valley",  # typo fixed
+    "Indian Plum": "Osoberry/Indian Plum/Wild Plum",
+    "Western Red Cedar": "Western Red-cedar"  # better
 }
 
 # From Perennials—Sun, Perennials—Shade and other data in NATS
