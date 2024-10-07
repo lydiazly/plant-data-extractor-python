@@ -7,7 +7,7 @@ Gets data from webpages.
 [Pkgs] requests beautifulsoup4 pandas selenium
 """
 # 2024-10-04 created by Lydia
-# 2024-10-05 last modified by Lydia
+# 2024-10-06 last modified by Lydia
 ###############################################################################|
 import requests
 from bs4 import BeautifulSoup, Tag, NavigableString
@@ -274,5 +274,5 @@ if __name__ == '__main__':
     df.to_csv(output_file, index=False)
 
     print()
-    print(df)
+    print(df, end='\n\n')
     print(f"File saved: {output_file}")

@@ -48,3 +48,9 @@ COMMON_REPLACE_NATS = {
     "Indian Plum": "Osoberry/Indian Plum/Wild Plum",
     "Skunk Cabbage": "Western Skunk Cabbage"  # needs review
 }
+
+# Perennial plants (Latin)
+PERENNIALS = ["Lysichiton americanus", "Sedum divergens"]
+
+# Annual plants (Latin)
+ANNUALS = []

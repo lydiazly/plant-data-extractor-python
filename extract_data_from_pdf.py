@@ -9,7 +9,7 @@ Reference: https://github.com/pymupdf/PyMuPDF-Utilities/blob/master/table-analys
 [Pkgs] pandas, pymupdf
 """
 # 2024-10-04 created by Lydia
-# 2024-10-05 last modified by Lydia
+# 2024-10-06 last modified by Lydia
 ###############################################################################|
 import pandas as pd
 import os
@@ -61,6 +61,8 @@ def extract_category_data(category, category_name):
         df['SPEC SIZES'] = replace_acronyms(df['SPEC SIZES'], mappings.SIZE_MAPPING)
     except KeyError:
         pass
+
+    df[['SOIL', 'HABITAT']] = df[['SOIL', 'HABITAT']].replace(r',\s*', ', ', regex=True)
 
     return df
 
