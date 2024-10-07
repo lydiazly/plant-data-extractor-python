@@ -46,11 +46,130 @@ LATIN_REPLACE_NATS = {
 # Keeping consistent with the shop
 COMMON_REPLACE_NATS = {
     "Indian Plum": "Osoberry/Indian Plum/Wild Plum",
-    "Skunk Cabbage": "Western Skunk Cabbage"  # needs review
+    "Skunk Cabbage": "Western Skunk Cabbage",  # needs review
+    "False Lily-of-the- Valley": "False Lily-of-the-Valley"  # typo fixed
 }
 
-# Perennial plants (Latin)
-PERENNIALS = ["Lysichiton americanus", "Sedum divergens"]
+# From Perennials—Sun, Perennials—Shade and other data in NATS
+PERENNIALS = [
+    # correct 'Perennial/Annual' in the shop
+    "Lysichiton americanus",
+    "Sedum divergens"
+] + [
+    # Perennials—Sun
+    "Achillea millefolium",
+    "Anaphalis margaritaceae",
+    "Anemone multifida",
+    "Arctostaphylos uva-ursi",
+    "Armeria maritima",
+    "Artemesia frigida",
+    "Aster",  # Aster spp.
+    "Campanula rotundifolia",
+    "Castilleja",  # Castilleja spp.
+    "Eriophyllum lanatum",
+    "Fragaria",  # Fragaria spp.
+    "Gaillaria aristata",
+    "Gallium boreale",
+    "Geum triflorum",
+    "Heuchera cylindrica",  # Heuchera spp.
+    "Oslynium douglasii",
+    "Penstemon",  # Penstemon spp.
+    "Sisyrinchium",  # Sisyrinchium spp.
+    "Solidago canadensis"
+] + [
+    # Perennials—Shade
+    "Achlys triphylla",
+    "Aquilegia formosa",
+    "Cornus canadensis",
+    "Dicentra formosa",
+    "Fragaria chiloensis",  # SUN value fixed
+    "Geum macrophyllum",
+    "Maianthemum dilatatum",
+    "Tellima grandiflora",
+    "Tolmiea menziesii",
+    "Viola sempervirens"
+]
 
-# Annual plants (Latin)
 ANNUALS = []
+
+# From Ferns—Shade in NATS
+FERNS = [
+    "Adiantum aleuticum",
+    "Blechnum spicant",
+    "Polypodium glycyrrhiza",
+    "Polypodium scouleri",
+    "Polystichum munitum",
+    "Polystichum neolobatum"
+]
+
+# From Perennials—Sun in NATS
+SUN_LOVING = [
+    "Achillea millefolium",
+    "Anaphalis margaritaceae",
+    "Anemone multifida",
+    "Arctostaphylos uva-ursi",
+    "Armeria maritima",
+    "Artemesia frigida",
+    "Aster",  # Aster spp.
+    "Campanula rotundifolia",
+    "Castilleja",  # Castilleja spp.
+    "Eriophyllum lanatum",
+    "Fragaria",  # Fragaria spp.
+    "Gaillaria aristata",
+    "Gallium boreale",
+    "Geum triflorum",
+    "Heuchera cylindrica",  # Heuchera spp.
+    "Oslynium douglasii",
+    "Penstemon",  # Penstemon spp.
+    "Sisyrinchium",  # Sisyrinchium spp.
+    "Solidago canadensis"
+]
+
+# From Ferns—Shade and Perennials—Shade in NATS
+SHADE_FRIENDLY = [
+    # Ferns—Shade
+    "Adiantum aleuticum",
+    "Blechnum spicant",
+    "Polypodium glycyrrhiza",
+    "Polypodium scouleri",
+    "Polystichum munitum",
+    "Polystichum neolobatum",
+] + [
+    # Perennials—Shade
+    "Achlys triphylla",
+    "Aquilegia formosa",
+    "Cornus canadensis",
+    "Dicentra formosa",
+    "Fragaria chiloensis",  # SUN value fixed
+    "Geum macrophyllum",
+    "Maianthemum dilatatum",
+    "Tellima grandiflora",
+    "Tolmiea menziesii",
+    "Viola sempervirens"
+]
+
+# From Grasses in NATS
+GRASSES = [
+    "Carex pachystachya",  # Carex spp. (dryland)
+    "Carex pansa",  # Carex spp. (dryland)
+    "Carex tumulicola",  # Carex spp. (dryland)
+    "Festuca",  # Festuca spp.
+    "Koeleria macrantha",
+    "Calamagrostis stricta",
+    "Schizachyrium scoparium"
+]
+
+BULBS = [
+    "Allium acuminatum",
+    "Allium cernuum",
+    "Allium schoenoprasm",
+    "Brodiaea",
+    "Camassia quamash",
+    "Narcissus",
+    "Oslynium douglasii"
+]
+
+# Corrections
+SUN_FIX = {
+    "Fragaria chiloensis": "Sun/Partial Shade"
+}

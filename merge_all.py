@@ -20,9 +20,17 @@ input_file_shop = config.CATALOG_FILE_SHOP
 output_file = os.path.join(config.CATALOG_DIR, "catalogue_all_merged.csv")
 
 
-def add_keyword(df, keyword):
-    mask = df['CATEGORY'].str.contains(keyword) & ~df['KEYWORDS'].str.contains(keyword)
-    df.loc[mask, 'KEYWORDS'] = df.loc[mask, 'KEYWORDS'].apply(lambda x: keyword + (', ' + x if x else ''))
+PREPEND = 'prepend'
+APPEND = 'append'
+
+
+def add_keyword(df, src_col, src_text, keyword, prepend_or_append):
+    mask = df[src_col].str.contains(src_text) & ~df['KEYWORDS'].str.contains(keyword)
+    if mask.any():
+        if prepend_or_append == PREPEND:
+            df.loc[mask, 'KEYWORDS'] = df.loc[mask, 'KEYWORDS'].apply(lambda x: keyword + (', ' + x if x else ''))
+        else:
+            df.loc[mask, 'KEYWORDS'] = df.loc[mask, 'KEYWORDS'].apply(lambda x: (x + ', ' if x else '') + keyword)
     return df
 
 
@@ -30,6 +38,10 @@ def add_keyword(df, keyword):
 if __name__ == '__main__':
     df_nats = pd.read_csv(input_file_nats)  # ['LATIN', 'LATIN_0', 'COMMON', 'SUN', 'SOIL', 'HABITAT', 'SIZES', 'CATEGORY']
     df_shop = pd.read_csv(input_file_shop)  # ['IN_STOCK', 'LATIN', 'LATIN_0', 'COMMON', 'COMMON_0', 'SQUAMISH', 'HALKOMELEM', 'KEYWORDS', 'IMAGE', 'LINK', 'DESCRIPTION']
+
+    # Correct sun exposure in NATS
+    for name, value in corrections.SUN_FIX.items():
+        df_nats.loc[df_nats['LATIN'] == name, 'SUN'] = value
 
     df_merged = pd.merge(df_nats, df_shop, on='LATIN', how='outer', suffixes=('', '_shop')).fillna('')
     df_merged.sort_values(by='LATIN', inplace=True)
@@ -40,15 +52,57 @@ if __name__ == '__main__':
     # Correct 'Perennial/Annual' in 'KEYWORDS'
     if corrections.PERENNIALS:
         mask = df_merged['LATIN'].isin(corrections.PERENNIALS)
-        df_merged.loc[mask, 'KEYWORDS'] = df_merged.loc[mask, 'KEYWORDS'].str.replace('Perennial/Annual', 'Perennial')
+        if mask.any():
+            df_merged.loc[mask, 'KEYWORDS'] = df_merged.loc[mask, 'KEYWORDS'].str.replace('Perennial/Annual', 'Perennials')
     if corrections.ANNUALS:
         mask = df_merged['LATIN'].isin(corrections.ANNUALS)
-        df_merged.loc[mask, 'KEYWORDS'] = df_merged.loc[mask, 'KEYWORDS'].str.replace('Perennial/Annual', 'Annual')
+        if mask.any():
+            df_merged.loc[mask, 'KEYWORDS'] = df_merged.loc[mask, 'KEYWORDS'].str.replace('Perennial/Annual', 'Annuals')
 
-    # Prepend keywords
-    for keyword in ['Perennial', 'Native Trees', 'Shrubs', 'Groundcover']:
-        df_merged = add_keyword(df_merged, keyword)
+    # Add keywords based on 'CATEGORY'
+    keyword_dict = {
+        'Perennials': 'Perennials',
+        'Native Trees': 'Native Trees',
+        'Shrubs': 'Shrubs',
+        'Groundcover': 'Groundcover',
+        "Wetland Plants": "Wetland"
+    }
+    for src_text, keyword in keyword_dict.items():
+        df_merged = add_keyword(df_merged, 'CATEGORY', src_text, keyword, PREPEND)
+    
+    # Add keywords based on 'HABITAT'
+    keyword_dict = {
+        'Wetland': 'Wetland',
+        'Salt Marsh': 'Salt Marsh'
+    }
+    for src_text, keyword in keyword_dict.items():
+        df_merged = add_keyword(df_merged, 'HABITAT', src_text, keyword, APPEND)
 
+    # Add keywords from Perennials—Sun and Perennials—Shade lists in NATS
+    for name in corrections.PERENNIALS:
+        df_merged = add_keyword(df_merged, 'LATIN', name, 'Perennials', PREPEND)
+
+    # Add keywords from Grasses list in NATS
+    for name in corrections.GRASSES:
+        df_merged = add_keyword(df_merged, 'LATIN', name, 'Grasses', APPEND)
+
+    # Add keywords from Ferns—Shade list in NATS
+    for name in corrections.FERNS:
+        df_merged = add_keyword(df_merged, 'LATIN', name, 'Ferns', APPEND)
+
+    # Add keywords from Bulbs list in NATS
+    for name in corrections.BULBS:
+        df_merged = add_keyword(df_merged, 'LATIN', name, 'Bulbs', APPEND)
+
+    # Add keywords from Perennials—Sun list in NATS
+    for name in corrections.SUN_LOVING:
+        df_merged = add_keyword(df_merged, 'LATIN', name, 'Sun-loving', APPEND)
+
+    # Add keywords from Ferns—Shade and Perennials—Shade lists in NATS
+    for name in corrections.SHADE_FRIENDLY:
+        df_merged = add_keyword(df_merged, 'LATIN', name, 'Shade-friendly', APPEND)
+
+    # Extra columns
     for col in columns.COL_NAMES_ALL:
         if col not in col_names_original:
             df_merged[col] = ""
